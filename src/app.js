@@ -3,23 +3,23 @@ const { adminAuth, userAuth } = require("./middlewares/auth");
 
 const app = express();
 
-app.use("/admin", adminAuth);
+app.get("/user", (req, res) => {
+    try {
+        throw new Error("wqsafer");
+    
+        res.send("User data");        
+    } catch (error) {
+        res.status(500).send("By catch block")
+    }
 
-app.post("/user",(req, res) => {
-    res.send("User logged in");
   });
 
-app.get("/user",userAuth, (req, res) => {
-    res.send("User data");
-  });
+  app.use("/",(err,req,res,next)=>{
+    if(err){
+        res.status(500).send("SOmething went wrong");
+    }
+  })
 
-app.get("/admin/getAllData", (req, res) => {
-  res.send("All data fetched");
-});
-
-app.get("/admin/deleteUser", (req, res) => {
-  res.send("User deleted");
-});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
