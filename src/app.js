@@ -5,6 +5,10 @@ const app = express();
 
 app.use("/admin", adminAuth);
 
+app.post("/user",(req, res) => {
+    res.send("User logged in");
+  });
+
 app.get("/user",userAuth, (req, res) => {
     res.send("User data");
   });
