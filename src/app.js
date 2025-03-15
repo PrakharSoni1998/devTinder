@@ -1,15 +1,22 @@
-const express = require('express')
+const express = require("express");
+const { adminAuth, userAuth } = require("./middlewares/auth");
 
-const app = express()
+const app = express();
 
+app.use("/admin", adminAuth);
 
-app.get('/users/:userId/:name',(req,res)=>{
-    console.log(req.params);
-    
-    res.send({name:"tetst"})
-})
+app.get("/user",userAuth, (req, res) => {
+    res.send("User data");
+  });
 
+app.get("/admin/getAllData", (req, res) => {
+  res.send("All data fetched");
+});
 
-app.listen(3000,()=>{
-console.log("Server is running on port 3000")
-})
+app.get("/admin/deleteUser", (req, res) => {
+  res.send("User deleted");
+});
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
