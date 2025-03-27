@@ -11,6 +11,14 @@ const validateSignupData = (req)=>{
     }
 }
 
+const validateEditUserProfileData = (req)=>{
+    const validEditFields = ["firstName","lastName","age","skills","photoURL","about","gender"]
+     
+   let canEditUser = Object.keys(req.body).every(field=>validEditFields.includes(field))
+
+   return canEditUser
+}
 module.exports ={
-    validateSignupData
+    validateSignupData,
+    validateEditUserProfileData
 }
