@@ -1,16 +1,12 @@
 const express = require('express')
 const { userAuth } = require("../middlewares/auth");
+const { sendConnectionRequest, reviewConnectionRequest } = require('../controller/connectionRequestController');
 
 
 const requestRouter = express.Router()
 
-requestRouter.post("/connectionRequest", userAuth, async (req, res) => {
-  try {
-    console.log("here");
-    res.send("testing");
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-});
+requestRouter.post("/request/send/:status/:toUserId", userAuth, sendConnectionRequest);
+
+requestRouter.post("/request/review/:status/:requestId", userAuth, reviewConnectionRequest);
 
 module.exports = requestRouter
