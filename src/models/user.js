@@ -61,12 +61,12 @@ const userSchema = new mongoose.Schema(
     },
     photoURL: {
       type: String,
-      default : '',
-      validate(data) {
-        if (data && !validator.isURL(data)) {
-          throw new Error("Invalid photo url" + data);
-        }
-      },
+      default : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwdIVSqaMsmZyDbr9mDPk06Nss404fosHjLg&s',
+      // validate(data) {
+      //   if (data && !validator.isURL(data)) {
+      //     throw new Error("Invalid photo url" + data);
+      //   }
+      // },
     },
     skills: {
       type: [String],

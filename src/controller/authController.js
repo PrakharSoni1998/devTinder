@@ -15,8 +15,10 @@ const signup = async (req, res) => {
       password: hashedPassword,
     };
     const user = new User(userData);
-    await user.save();
-    res.send("User signed up successfully.");
+    const savedUser =await user.save();
+    const token = await savedUser.getJWT();
+    res.cookie("token", token, { expires:  new Date(Date.now() + 8 * 3600000) });
+    res.send({data:savedUser,status:201,message:"User signed up successfully"});
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -37,8 +39,8 @@ const login = async (req, res) => {
         throw new Error("Invalid credentials");
       } else {
         const token = await user.getJWT();
-        res.cookie("token", token, { maxAge: 4302002002 });
-        res.send("User logged in successfully");
+        res.cookie("token", token, { expires:  new Date(Date.now() + 8 * 3600000) });
+        res.send({data:user,status:200,message:"User logged in successfully"});
       }
     }
   } catch (error) {
