@@ -1,5 +1,6 @@
 const connectionRequestModel = require("../models/connectionRequests");
 const User = require("../models/user");
+const { sendEmail } = require("../utils/sendEmail");
 
 const sendConnectionRequest = async (req, res) => {
   try {
@@ -44,6 +45,18 @@ const sendConnectionRequest = async (req, res) => {
     if (status == "ignored") {
       message = `${req.user.firstName} has ignored ${toUser.firstName}.`;
     }
+
+    if (status == "interested") {
+      const subject = `${req.user.firstName} intersted in you`
+      const emailMessage = `Hello ${toUser.firstName}, ${req.user.firstName} intersted in you`
+      try {
+        const emailSent = await sendEmail(subject,emailMessage);
+        console.log("email sent");
+      } catch (error) {
+        console.log("err",error);  
+      }
+    }
+
     res.json({
       data: result,
       status: 201,
